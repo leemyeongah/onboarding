@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wisebirds 1본부 2팀 — 인턴 온보딩 가이드</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans KR',sans-serif;background:#f7f7f5;color:#37352f;font-size:14px}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:220px;flex-shrink:0;background:#fbfbfa;border-right:1px solid #e8e8e5;padding:1rem 0;position:fixed;height:100vh;overflow-y:auto}
+.sb-logo{padding:0 1rem 1rem;border-bottom:1px solid #e8e8e5;margin-bottom:8px}
+.sb-logo-text{font-size:13px;font-weight:600;color:#37352f}
+.sb-logo-sub{font-size:11px;color:#9b9a97;margin-top:2px}
+.sb-title{font-size:11px;font-weight:600;color:#9b9a97;padding:0 1rem;margin:12px 0 4px;letter-spacing:.05em;text-transform:uppercase}
+.sb-item{display:flex;align-items:center;gap:8px;padding:5px 1rem;font-size:13px;color:#6b6b6b;cursor:pointer;border-radius:4px;margin:0 6px;transition:background .1s}
+.sb-item:hover{background:#efefef}
+.sb-item.active{background:#e8e8e5;color:#37352f;font-weight:500}
+.sb-item .icon{font-size:15px;width:20px;text-align:center}
+.content{margin-left:220px;flex:1;padding:2rem 2.5rem;max-width:860px}
+.page{display:none}
+.page.active{display:block}
+.page-title{font-size:24px;font-weight:700;color:#37352f;margin-bottom:4px}
+.page-emoji{font-size:28px;margin-bottom:8px}
+.page-desc{font-size:14px;color:#9b9a97;margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid #e8e8e5}
+.sec-label{font-size:11px;font-weight:600;color:#9b9a97;letter-spacing:.06em;text-transform:uppercase;margin:1.5rem 0 8px}
+.card{background:#fff;border:1px solid #e8e8e5;border-radius:8px;padding:1rem 1.25rem;margin-bottom:8px}
+.card.toggle-card{cursor:pointer;transition:border-color .15s}
+.card.toggle-card:hover{border-color:#bbb}
+.row{display:flex;align-items:flex-start;gap:10px}
+.ico{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
+.ct{font-size:14px;font-weight:600;color:#37352f}
+.cd{font-size:12px;color:#9b9a97;margin-top:2px;line-height:1.5}
+.detail{display:none;margin-top:10px;padding:10px 12px;background:#f7f7f5;border-radius:6px;font-size:13px;color:#6b6b6b;line-height:1.9;border:1px solid #e8e8e5}
+.detail.on{display:block}
+.chevron{margin-left:auto;font-size:12px;color:#9b9a97;transition:transform .2s;display:inline-block}
+.chevron.open{transform:rotate(180deg)}
+.kv{display:flex;gap:8px;padding:7px 0;border-bottom:1px solid #f0f0ed;font-size:13px;align-items:flex-start}
+.kv:last-child{border-bottom:none}
+.kk{color:#9b9a97;min-width:90px;flex-shrink:0;padding-top:1px;font-size:12px}
+.kv-val{color:#37352f;line-height:1.6;flex:1}
+.lnk{color:#2383e2;text-decoration:none;font-size:11px;padding:1px 8px;border:1px solid #c5d9f5;border-radius:20px;margin-left:5px;white-space:nowrap;display:inline-flex;align-items:center;gap:3px;background:#f0f6ff}
+.lnk:hover{background:#dceeff}
+.tip{background:#f0f6ff;border-radius:6px;padding:7px 10px;font-size:12px;color:#2383e2;margin-top:8px;line-height:1.6;border-left:3px solid #2383e2}
+.setting-block{margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #f0f0ed}
+.setting-block:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.setting-title{font-size:13px;font-weight:600;color:#37352f;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.setting-body{font-size:13px;color:#6b6b6b;line-height:1.8}
+.step{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #f0f0ed}
+.step:last-child{border-bottom:none}
+.sn{font-size:12px;font-weight:600;color:#2383e2;min-width:20px;padding-top:2px}
+.st{font-size:13px;color:#37352f;line-height:1.5;font-weight:500}
+.ss{font-size:12px;color:#9b9a97;margin-top:2px;line-height:1.5}
+.tl{display:flex;gap:12px;margin-bottom:12px}
+.tl:last-child{margin-bottom:0}
+.tl-dot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0}
+.tl-body{flex:1;padding-top:4px}
+.tl-title{font-size:13px;font-weight:600;color:#37352f;margin-bottom:2px}
+.tl-desc{font-size:12px;color:#9b9a97;line-height:1.6}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.img-upload-area{border:2px dashed #e8e8e5;border-radius:8px;padding:20px;text-align:center;cursor:pointer;margin-top:8px;transition:border-color .15s;background:#fafafa}
+.img-upload-area:hover{border-color:#bbb;background:#f5f5f5}
+.img-upload-area p{font-size:12px;color:#9b9a97;margin-top:6px}
+.img-preview{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.img-thumb{position:relative;width:80px;height:80px;border-radius:6px;overflow:hidden;border:1px solid #e8e8e5}
+.img-thumb img{width:100%;height:100%;object-fit:cover}
+.img-thumb .del{position:absolute;top:3px;right:3px;background:rgba(0,0,0,.5);color:#fff;border:none;border-radius:50%;width:18px;height:18px;font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.badge{display:inline-block;font-size:10px;padding:2px 7px;border-radius:20px;font-weight:600;margin-bottom:8px}
+.badge-blue{background:#dceeff;color:#2383e2}
+/* 달력 */
+.cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.cal-nav-title{font-size:15px;font-weight:600;color:#37352f}
+.cal-nav-btn{background:#fff;border:1px solid #e8e8e5;border-radius:6px;padding:4px 12px;font-size:12px;color:#6b6b6b;cursor:pointer}
+.cal-nav-btn:hover{background:#f5f5f5}
+.cal{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+.cal-head{font-size:11px;font-weight:600;color:#9b9a97;text-align:center;padding:4px 0}
+.cal-cell{background:#fafafa;border-radius:6px;padding:5px 7px;min-height:52px;border:1px solid #f0f0ed;cursor:default}
+.cal-date{font-size:10px;color:#9b9a97;margin-bottom:2px}
+.cal-text{font-size:10px;color:#37352f;line-height:1.4}
+.cal-text.accent{color:#2383e2;font-weight:600}
+.cal-text.holiday{color:#e03e3e}
+.cal-empty{min-height:52px}
+.divider{height:1px;background:#e8e8e5;margin:1.5rem 0}
+</style>
+</head>
+<body>
+<div class="layout">
+<div class="sidebar">
+  <div class="sb-logo">
+    <div class="sb-logo-text">Wisebirds 1본부 2팀</div>
+    <div class="sb-logo-sub">인턴 온보딩 가이드</div>
+  </div>
+  <div class="sb-title">메뉴</div>
+  <div class="sb-item active" onclick="nav('home')"><span class="icon">🏠</span>홈</div>
+  <div class="sb-item" onclick="nav('calendar')"><span class="icon">📆</span>인턴십 일정</div>
+  <div class="sb-item" onclick="nav('accounts')"><span class="icon">🔑</span>계정 정보</div>
+  <div class="sb-item" onclick="nav('raw')"><span class="icon">📊</span>RAW 데이터 추출</div>
+  <div class="sb-item" onclick="nav('amore')"><span class="icon">🏪</span>아모레몰 소재</div>
+  <div class="sb-item" onclick="nav('molbany')"><span class="icon">👕</span>몰바니 업무</div>
+  <div class="sb-item" onclick="nav('meta')"><span class="icon">⚙️</span>메타 세팅법</div>
+  <div class="sb-item" onclick="nav('study')"><span class="icon">📚</span>교육 스터디</div>
+  
+</div>
+
+<div class="content">
+
+<!-- 홈 -->
+<div id="page-home" class="page active">
+  <div class="page-emoji">👋</div>
+  <div class="page-title">환영해요!</div>
+  <div class="page-desc">Wisebirds 1본부 2팀 온보딩 가이드예요. 왼쪽 메뉴에서 원하는 섹션을 클릭하세요.</div>
+  <div class="card">
+    <div class="tl"><div class="tl-dot" style="background:#dceeff;color:#2383e2">7월</div><div class="tl-body"><div class="tl-title">교육 & 스터디</div><div class="tl-desc">★입사★ → 프로그램 안내 → 매체별 교육 정리 → 몰바니 세팅 연습 → 스터디 정리</div></div></div>
+    <div class="tl"><div class="tl-dot" style="background:#ddedea;color:#0f7b6c">8월</div><div class="tl-body"><div class="tl-title">실무 투입</div><div class="tl-desc">아모레몰 디스크립션 작성 → 소재 업무 → 몰바니 리포트 연습 → 대체공휴일(8/17)</div></div></div>
+    <div class="tl"><div class="tl-dot" style="background:#fdecc8;color:#c17d10">9월</div><div class="tl-body"><div class="tl-title">최종 PT 준비</div><div class="tl-desc">PT 인사이트 정리 → 1차 공유 → 추석 연휴(4주차) → 최종 발표</div></div></div>
+  </div>
+  <div class="sec-label">담당 클라이언트</div>
+  <div class="grid2">
+    <div class="card" style="cursor:pointer" onclick="nav('amore')"><div class="row"><div class="ico" style="background:#dceeff;font-size:16px">🏪</div><div><div class="ct">아모레몰</div><div class="cd">소재·디스크립션 업무</div></div></div></div>
+    <div class="card" style="cursor:pointer" onclick="nav('molbany')"><div class="row"><div class="ico" style="background:#ddedea;font-size:16px">👕</div><div><div class="ct">몰바니</div><div class="cd">메타 세팅·리포트·정산</div></div></div></div>
+    <div class="card" style="cursor:pointer" onclick="nav('accounts')"><div class="row"><div class="ico" style="background:#fdecc8;font-size:16px">💳</div><div><div class="ct">네이버페이</div><div class="cd">멀티채널 운영</div></div></div></div>
+
+  </div>
+</div>
+
+<!-- 달력 -->
+<div id="page-calendar" class="page">
+  <div class="page-emoji">📆</div>
+  <div class="page-title">인턴십 일정</div>
+  <div class="page-desc">좌우 버튼으로 월을 이동할 수 있어요.</div>
+  <div class="card">
+    <div class="cal-nav">
+      <button class="cal-nav-btn" onclick="prevMonth()">◀ 이전</button>
+      <div class="cal-nav-title" id="cal-month-title">7월</div>
+      <button class="cal-nav-btn" onclick="nextMonth()">다음 ▶</button>
+    </div>
+    <div class="cal">
+      <div class="cal-head">월</div><div class="cal-head">화</div><div class="cal-head">수</div><div class="cal-head">목</div><div class="cal-head">금</div>
+      <div id="cal-body" style="display:contents"></div>
+    </div>
+  </div>
+</div>
+
+<!-- 계정 정보 -->
+<div id="page-accounts" class="page">
+  <div class="page-emoji">🔑</div>
+  <div class="page-title">계정 정보</div>
+  <div class="page-desc">매체별 접속 링크 모음이에요. 계정 권한 부여 후 접속 가능해요.</div>
+  <div class="sec-label">아모레몰</div>
+  <div class="card">
+    <div class="kv"><div class="kk">ASA</div><div class="kv-val">acd1_t2@wisebirds.com <a class="lnk" href="https://app.searchads.apple.com/cm/app/4299600/report" target="_blank">접속 ↗</a></div></div>
+    <div class="kv"><div class="kk">구글 DA</div><div class="kv-val">계정 연동 <a class="lnk" href="https://ads.google.com/aw/overview?ocid=276161216&euid=1104534145&__u=3153714105&uscid=276161216&__c=4023752384&authuser=0" target="_blank">접속 ↗</a></div></div>
+    <div class="kv"><div class="kk">구글 APP</div><div class="kv-val">계정 연동 <a class="lnk" href="https://ads.google.com/aw/overview?ocid=763696756&euid=1104534145&__u=3153714105&uscid=763696756&__c=1761125844&authuser=0" target="_blank">접속 ↗</a></div></div>
+    <div class="kv"><div class="kk">메타</div><div class="kv-val">계정 연동 <a class="lnk" href="https://adsmanager.facebook.com/adsmanager/manage/campaigns?act=378018217053167&business_id=680349535391798" target="_blank">접속 ↗</a></div></div>
+    <div class="kv"><div class="kk">카카오</div><div class="kv-val">계정 연동 <a class="lnk" href="https://moment.kakao.com/dashboard/420709" target="_blank">접속 ↗</a></div></div>
+    <div class="kv"><div class="kk">GFA</div><div class="kv-val">계정 연동 <a class="lnk" href="https://gfa.naver.com/adAccount/accounts/44331" target="_blank">접속 ↗</a></div></div>
+    <div class="kv"><div class="kk">에어브릿지</div><div class="kv-val">acd1_t4@wisebirds.co.kr <a class="lnk" href="https://app.airbridge.io/app/amoremall/reports/actual/684263" target="_blank">리포트1 ↗</a> <a class="lnk" href="https://app.airbridge.io/app/amoremall/reports/actual/727429" target="_blank">리포트2 ↗</a></div></div>
+    <div class="kv"><div class="kk">GA4</div><div class="kv-val">계정 연동 <a class="lnk" href="https://lookerstudio.google.com/u/0/reporting/d3845a31-c2cc-4d8f-bb42-b9677d2e18b4/page/lZc4D" target="_blank">접속 ↗</a></div></div>
+  </div>
+  <div class="sec-label">몰바니</div>
+  <div class="card">
+    <div class="kv"><div class="kk">자사몰</div><div class="kv-val">메타 광고 계정 <a class="lnk" href="https://adsmanager.facebook.com/adsmanager/manage/campaigns?act=776851034114613&business_id=680349535391798" target="_blank">접속 ↗</a></div></div>
+    <div class="kv"><div class="kk">협력광고</div><div class="kv-val">올리브영 협력광고 <a class="lnk" href="https://adsmanager.facebook.com/adsmanager/manage/campaigns?act=596661605898788&business_id=680349535391798" target="_blank">접속 ↗</a></div></div>
+  </div>
+  <div class="sec-label">네이버페이</div>
+  <div class="card">
+    <div class="kv"><div class="kk">구글</div><div class="kv-val">계정 연동 <a class="lnk" href="https://ads.google.com/aw/overview?ocid=6870195523&euid=1497177749&__u=8255353901&uscid=6870195523&__c=6356514027&authuser=0" target="_blank">접속 ↗</a></div></div>
+    <div class="kv"><div class="kk">메타</div><div class="kv-val">계정 연동 <a class="lnk" href="https://adsmanager.facebook.com/adsmanager/manage/ads?global_scope_id=574178932710090&business_id=574178932710090&act=530605363159371" target="_blank">접속 ↗</a></div></div>
+    <div class="kv"><div class="kk">카카오</div><div class="kv-val">계정 연동 <a class="lnk" href="https://moment.kakao.com/dashboard/420709" target="_blank">접속 ↗</a></div></div>
+    <div class="kv"><div class="kk">GFA</div><div class="kv-val">계정 연동 <a class="lnk" href="https://ads.naver.com/manage/ad-accounts/1910448/dashboard" target="_blank">접속 ↗</a></div></div>
+    <div class="kv"><div class="kk">GA4</div><div class="kv-val">계정 연동 <a class="lnk" href="https://lookerstudio.google.com/u/0/reporting/d3845a31-c2cc-4d8f-bb42-b9677d2e18b4/page/lZc4D" target="_blank">접속 ↗</a></div></div>
+    <div class="kv"><div class="kk">몰로코</div><div class="kv-val">계정 연동 <a class="lnk" href="https://portal.moloco.cloud/v2/p/WISEBIRDS/cm/a/zRigMPZDremytkeZ/d-overview" target="_blank">접속 ↗</a></div></div>
+  </div>
+</div>
+
+<!-- RAW 데이터 -->
+<div id="page-raw" class="page">
+  <div class="page-emoji">📊</div>
+  <div class="page-title">RAW 데이터 추출</div>
+  <div class="page-desc">아모레몰 기준 매체별 로우 데이터 추출 방법이에요.</div>
+  <div class="card">
+    <div class="step"><div class="sn">①</div><div><div class="st">ASA</div><div class="ss">1일~어제 날짜 선택 → 보고서 실행 → 로딩 완료 후 다운로드</div></div></div>
+    <div class="step"><div class="sn">②</div><div><div class="st">구글 앱 / DA</div><div class="ss">저장된 보고서 목록에서 선택 → 날짜만 변경 후 다운 (앱 2종 / DA 4종)</div></div></div>
+    <div class="step"><div class="sn">③</div><div><div class="st">메타</div><div class="ss">날짜만 변경 → 내보내기. 지표에 마우스 올리면 설명 확인 가능</div></div></div>
+    <div class="step"><div class="sn">④</div><div><div class="st">카카오</div><div class="ss">DA_데일리 리포트 Raw_아모레몰 / DA_브랜드 리포트_연령포함 → 날짜 변경 후 다운</div></div></div>
+    <div class="step"><div class="sn">⑤</div><div><div class="st">네이버 GFA</div><div class="ss">날짜 변경 → 확인 → 다운로드 요청 → 목록에서 다운</div></div></div>
+    <div class="step"><div class="sn">⑥</div><div><div class="st">GA4</div><div class="ss">수정 클릭 → 점 세개 클릭 → 내보내기<br>GA(구글 제외): 날짜로 저장 / GA(구글): 날짜_구글로 저장 (날짜 별도 변경 불필요)</div></div></div>
+  </div>
+  <div class="sec-label">매출 집계 기준</div>
+  <div class="card">
+    <div class="kv"><div class="kk">GA 매출</div><div class="kv-val">Google SDC · Demandgen · Criteo · Others (회원가입 캠페인)</div></div>
+    <div class="kv"><div class="kk">MMP 매출</div><div class="kv-val">Apple Search Ads (앱 기반 → MMP만 확인)</div></div>
+    <div class="kv"><div class="kk">GA+MMP</div><div class="kv-val">Nate · Saramin · Dailyshot · Targetpick</div></div>
+    <div class="kv"><div class="kk">매체 매출</div><div class="kv-val">메타 · 카카오 · 유튜브 · Toss · 네이버 등 위 조건 외 전체</div></div>
+  </div>
+  <div class="sec-label">업로드 경로</div>
+  <div class="card">
+    <div class="kv"><div class="kk">매체 로우</div><div class="kv-val">G:\공유 드라이브\Amore Mall_2\2. 리포트\8. 리포트 로우</div></div>
+    <div class="kv"><div class="kk">MMP&amp;GA</div><div class="kv-val">G:\공유 드라이브\Amore Mall_2\2. 리포트\9. MMP&amp;GA 데이터 로우</div></div>
+    <div class="kv"><div class="kk">연습용</div><div class="kv-val">G:\공유 드라이브\CS3B\99. 스터디</div></div>
+  </div>
+</div>
+
+<!-- 아모레몰 소재 -->
+<div id="page-amore" class="page">
+  <div class="page-emoji">🏪</div>
+  <div class="page-title">아모레몰 소재 업무</div>
+  <div class="page-desc">소재 카피 작성부터 매체별 디스크립션 작성법까지 정리했어요.</div>
+  <div class="sec-label">관련 시트 모음</div>
+  <div class="card">
+    <div class="kv"><div class="kk">업무 타임라인</div><div class="kv-val">팀 내 업무 완료 여부 공유 시트 <a class="lnk" href="https://docs.google.com/spreadsheets/d/1WIjaBXxRu9u7I6ygLXzMnjNGkEvLMRrWtVPQEdqIWqE/edit?gid=2080289177" target="_blank">열기 ↗</a></div></div>
+    <div class="kv"><div class="kk">크리 시트(광고주)</div><div class="kv-val">광고주와 소통하는 시트 <a class="lnk" href="https://docs.google.com/spreadsheets/d/1WCFLqAB29jkfsVXi1fzipf68FuT_59u5zZjcTNl3r2s/edit?pli=1&gid=541022483" target="_blank">열기 ↗</a></div></div>
+    <div class="kv"><div class="kk">디자인 팀</div><div class="kv-val">디자인팀에 소재 제작 요청하는 시트 <a class="lnk" href="https://docs.google.com/spreadsheets/d/1fboms1UQnqYAJ-XoHy38dIxuHDNn8ujY/edit?gid=333210412" target="_blank">열기 ↗</a></div></div>
+    <div class="kv"><div class="kk">디자인 시안</div><div class="kv-val">광고주 컨펌 시트 <a class="lnk" href="https://docs.google.com/spreadsheets/d/1WCFLqAB29jkfsVXi1fzipf68FuT_59u5zZjcTNl3r2s/edit?pli=1&gid=660362673" target="_blank">열기 ↗</a></div></div>
+    <div class="kv"><div class="kk">캠페인 매니저</div><div class="kv-val">아모레 캠페인 매니저 <a class="lnk" href="https://cm.amorepacific.com/login" target="_blank">열기 ↗</a></div></div>
+    <div class="kv"><div class="kk">위브랩 세팅</div><div class="kv-val">위브랩 세팅 시트 <a class="lnk" href="https://docs.google.com/spreadsheets/d/1oh9jhs0Fx0RDl6rdDB5nnkahZXu6n_geD0bjZUBA0fM/edit?pli=1&gid=1920686220" target="_blank">열기 ↗</a></div></div>
+    <div class="kv"><div class="kk">아모레 팀즈</div><div class="kv-val">팀즈 채널 <a class="lnk" href="https://teams.microsoft.com.mcas.ms/v2/" target="_blank">열기 ↗</a></div></div>
+    <div class="kv"><div class="kk">UTM 빌더</div><div class="kv-val">소재 UTM 빌더 생성 시트 <a class="lnk" href="https://docs.google.com/spreadsheets/d/1I1FwrfHIrAubaJz4TT7nCChuw77mQ47z1gXEpQitFtM/edit?gid=1971228949" target="_blank">열기 ↗</a></div></div>
+  </div>
+  <div class="sec-label">소재 카피 작성 (크리 시트)</div>
+  <div class="card">
+    <div class="setting-block">
+      <div class="setting-title">작업 흐름</div>
+      <div class="setting-body">광고주 기획전 소재 요청 → 주요 카피 참고 → <b>이미지형 / 텍스트배너형</b> 카피 작성 → 컨펌 → O표시 + 빨간 배경 처리</div>
+    </div>
+    <div class="setting-block" style="border:none;padding:0;margin:0">
+      <div class="setting-title">템플릿 참고</div>
+      <div class="setting-body">A11 칸에 템플릿 정리 파일 눈에 익혀두기. 주로 <b>와이드형</b> 많이 사용</div>
+    </div>
+  </div>
+  <div class="sec-label">매체별 디스크립션 작성법</div>
+  <div class="card toggle-card" onclick="tog('desc-meta')">
+    <div class="row"><div class="ico" style="background:#dceeff">📘</div><div style="flex:1"><div class="ct">메타 디스크립션</div><div class="cd">매주 수~목 기획전 체크 후 작성</div></div><span class="chevron" id="chev-desc-meta">▼</span></div>
+    <div id="desc-meta" class="detail">
+      <b>작성 주기:</b> 매주 수~목 기획전 확인 후 표 추가 작성<br><br>
+      <b>항목:</b> 구분(수기 작성) / 타이틀&설명(2줄) / 디스크립션(빨간 박스 고정)<br><br>
+      <b>해시태그:</b> 5개 내외. <b>#아모레몰 #브랜드한글명 #브랜드영문명</b> 고정<br>
+      통합 기획전은 #아모레몰만 고정<br><br>
+      <b>6대 브랜드:</b> #설화수 #한율 #바이탈뷰티 #아이오페 #에스트라 #헤라<br>
+      <div class="tip">😊 이모지를 많이 반영하면 좋아요!</div>
+    </div>
+  </div>
+  <div class="card toggle-card" onclick="tog('desc-google')" style="margin-top:4px">
+    <div class="row"><div class="ico" style="background:#ddedea">📗</div><div style="flex:1"><div class="ct">구글 디스크립션</div><div class="cd">메타와 구분 동일, 바이트 제한 있음</div></div><span class="chevron" id="chev-desc-google">▼</span></div>
+    <div id="desc-google" class="detail">
+      <b>구분:</b> 메타와 동일<br><br>
+      <b>제목:</b> 30바이트, 5개 중 3개 고정 → 2개만 작성<br>
+      <b>설명:</b> 90바이트, 5개 중 3개 고정 → 2개만 작성<br>
+      <div class="tip">~ ! , 특수문자 사용 불가!</div>
+    </div>
+  </div>
+  <div class="card toggle-card" onclick="tog('desc-kakao')" style="margin-top:4px">
+    <div class="row"><div class="ico" style="background:#fdecc8">📙</div><div style="flex:1"><div class="ct">카카오 디스크립션</div><div class="cd">비즈보드 기준, 특수문자 불가</div></div><span class="chevron" id="chev-desc-kakao">▼</span></div>
+    <div id="desc-kakao" class="detail">
+      <b>구분:</b> 메타와 동일<br><br>
+      <b>소재 설명:</b> 30바이트 이내. 청각장애인 음성 설명용 → 특수문자 불가<br>
+      ex) % → 퍼센트로 작성<br><br>
+      현재 디스플레이 미운영, 비즈보드만 집행 → 타이틀~행동유도버튼 불필요
+    </div>
+  </div>
+
+  <div class="sec-label">참고 이미지 첨부</div>
+  <div class="card">
+    <div class="setting-body" style="font-size:12px;color:#9b9a97;margin-bottom:8px">스크린샷이나 참고 이미지를 여기에 첨부할 수 있어요.</div>
+    <div class="img-upload-area" onclick="document.getElementById('upload-amore').click()">
+      <div style="font-size:24px">📎</div>
+      <p>클릭하여 이미지 첨부<br>(PNG, JPG, GIF)</p>
+      <input type="file" id="upload-amore" accept="image/*" multiple style="display:none" onchange="addImages(this,'preview-amore')">
+    </div>
+    <div class="img-preview" id="preview-amore"></div>
+  </div>
+</div>
+
+<!-- 몰바니 업무 -->
+<div id="page-molbany" class="page">
+  <div class="page-emoji">👕</div>
+  <div class="page-title">몰바니 업무</div>
+  <div class="page-desc">메타 세팅, 리포트 작성, 정산 업무 안내예요.</div>
+  <div class="sec-label">계정 구분</div>
+  <div class="card">
+    <div class="kv"><div class="kk">협력광고 계정</div><div class="kv-val">올리브영 광고일 경우</div></div>
+    <div class="kv"><div class="kk">자사몰 계정</div><div class="kv-val">그 외 모든 경우</div></div>
+  </div>
+  <div class="sec-label">캠페인 종류</div>
+  <div class="card">
+    <div class="kv"><div class="kk">트래픽 캠페인</div><div class="kv-val">픽셀 미설치 외부링크 랜딩 (무신사·카카오선물하기·지그재그 등)</div></div>
+    <div class="kv"><div class="kk">구매최적화</div><div class="kv-val">픽셀 설치된 자사몰·올리브영 — 구매 전환값 트래킹 가능</div></div>
+  </div>
+  <div class="sec-label">리포트 작성법</div>
+  <div class="card">
+    <div class="setting-block"><div class="setting-title">① 보고서 추출</div><div class="setting-body">각 계정 → 보고서 탭 클릭 → 날짜: 전 일자 기준 → 내보내기<br><b>보고서명:</b> 몰바니_자사몰_리포트 / 몰바니 올영협력광고 리포트</div></div>
+    <div class="setting-block"><div class="setting-title">② 데이터 입력</div><div class="setting-body">RAW 탭에 보고서 붙여넣기 → 날짜 탭은 데이터 나누기 필요<br>#N/A 나오는 값은 인덱스 업데이트 필요</div></div>
+    <div class="setting-block"><div class="setting-title">③ 소재별 효율 탭</div><div class="setting-body">소재별 효율 탭 → 표 복사 후 피벗 설정 → 캠페인 선택<br>각 소재별 이미지 첨부: 삽입 → 셀 안에 이미지 삽입</div></div>
+    <div class="setting-block"><div class="setting-title">④ 최종 정리</div><div class="setting-body">summary 시트 + 홈쇼핑 시트만 보이게 설정<br>인덱스에 해당 월 날짜 채우기<br>내용별 행 띄어쓰기 2줄씩, 깔끔하게 정리<br><div class="tip">몰바니는 수수료 미포함 금액으로 대시보드 값과 일치하는지 확인!</div></div></div>
+    <div class="setting-block" style="border:none;padding:0;margin:0"><div class="setting-title">⑤ 메일 작성</div><div class="setting-body">형식보다 내용 중심으로 자유롭게 작성<br><b>파일 경로:</b> G:\공유 드라이브\몰바니&밈즈X와이즈버즈\3. 리포트\1. 몰바니_데일리 리포트\26년</div></div>
+  </div>
+  <div class="sec-label">참고 이미지 첨부</div>
+  <div class="card">
+    <div class="setting-body" style="font-size:12px;color:#9b9a97;margin-bottom:8px">리포트 화면 캡처, 세팅 참고 이미지 등을 첨부해요.</div>
+    <div class="img-upload-area" onclick="document.getElementById('upload-molbany').click()">
+      <div style="font-size:24px">📎</div>
+      <p>클릭하여 이미지 첨부<br>(PNG, JPG, GIF)</p>
+      <input type="file" id="upload-molbany" accept="image/*" multiple style="display:none" onchange="addImages(this,'preview-molbany')">
+    </div>
+    <div class="img-preview" id="preview-molbany"></div>
+  </div>
+</div>
+
+<!-- 메타 세팅법 -->
+<div id="page-meta" class="page">
+  <div class="page-emoji">⚙️</div>
+  <div class="page-title">메타 세팅법</div>
+  <div class="page-desc">몰바니 기준 메타 광고 세팅 단계별 안내예요.</div>
+  <div class="card">
+    <div class="setting-block">
+      <div class="setting-title">1. 캠페인단</div>
+      <div class="setting-body">
+        <b>캠페인명 규칙:</b> [날짜_목표_랜딩_기획전명]<br>
+        ex. 25.09.23_트래픽_지그재그_단독기획전<br><br>
+        <b>예산 방식:</b><br>
+        · 캠페인단 예산 → 머신러닝 자동 배분 (테스트 시 사용)<br>
+        · 세트단 예산 → 세트별 확실히 구분할 때
+      </div>
+      <div class="tip">몰바니는 자유도가 높아서 그때그때 판단해서 설정해요!</div>
+    </div>
+    <div class="setting-block">
+      <div class="setting-title">2. 세트단</div>
+      <div class="setting-body">
+        <b>타겟:</b> 기존타겟 / 신규타겟 / 유사타겟으로 구성<br>
+        · 기존 타겟: 저장된 타겟 말고 새로 직접 입력<br>
+        · 노출 위치: 모바일 + 인스타그램만<br>
+        · 예산: 총예산으로 세팅, 대시보드 금액 그대로 정산
+      </div>
+      
+    </div>
+    <div class="setting-block" style="border:none;padding:0;margin:0">
+      <div class="setting-title">3. 광고단</div>
+      <div class="setting-body">
+        <b>광고명:</b> 자유. 보고서용 00 넘버링 권장<br>
+        <b>소재 형식:</b> 단일 이미지 / 슬라이드 / 컬렉션<br>
+        <b>대표 계정:</b> 몰바니 계정으로 설정
+      </div>
+    </div>
+  </div>
+  <div class="sec-label">참고 이미지 첨부</div>
+  <div class="card">
+    <div class="img-upload-area" onclick="document.getElementById('upload-meta').click()">
+      <div style="font-size:24px">📎</div>
+      <p>메타 세팅 화면 캡처 등을 첨부해요.<br>(PNG, JPG, GIF)</p>
+      <input type="file" id="upload-meta" accept="image/*" multiple style="display:none" onchange="addImages(this,'preview-meta')">
+    </div>
+    <div class="img-preview" id="preview-meta"></div>
+  </div>
+</div>
+
+<!-- 교육 스터디 -->
+<div id="page-study" class="page">
+  <div class="page-emoji">📚</div>
+  <div class="page-title">에피 교육 스터디</div>
+  <div class="page-desc">입사 후 2주 내 완료. 매체별 교육 내용 정리 후 팀 공유예요.</div>
+  <div class="card">
+    <div class="kv"><div class="kk">정리 매체</div><div class="kv-val">구글 · 메타 · 카카오 · 네이버 등</div></div>
+    <div class="kv"><div class="kk">정리 항목</div><div class="kv-val">매체 / 기기 / 광고 상품 / 노출 위치 / 판매 단위 / 판매단가 / 타겟팅 여부 / 특징</div></div>
+    <div class="kv"><div class="kk">추가 과제</div><div class="kv-val">각 매체 소개서 읽고 추가 내용 첨부</div></div>
+    <div class="kv"><div class="kk">파일 경로</div><div class="kv-val">G:\공유 드라이브\CS3B\99. 스터디\2607</div></div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<script>
+const calData={
+  7:{name:'7월',offset:1,days:{2:{text:'★입사★',cls:'accent'},3:{text:'프로그램 안내'},17:{text:'제헌절',cls:'holiday'},24:{text:'교육 스터디 정리'},27:{text:'몰바니 세팅 연습'}}},
+  8:{name:'8월',offset:3,days:{10:{text:'소재 업무'},17:{text:'대체공휴일',cls:'holiday'},21:{text:'몰바니 리포트 연습'},31:{text:'디스크립션 작성'}}},
+  9:{name:'9월',offset:0,days:{7:{text:'PT 인사이트'},18:{text:'PT 1차 공유'},25:{text:'추석 연휴',cls:'holiday'},26:{text:'추석 연휴',cls:'holiday'},28:{text:'추석 연휴',cls:'holiday'}}}
+};
+let curMonth=7;
+function renderCal(){
+  const m=calData[curMonth];
+  document.getElementById('cal-month-title').textContent=m.name;
+  const body=document.getElementById('cal-body');
+  const totalDays=curMonth===9?30:31;
+  let html='';
+  for(let i=0;i<m.offset;i++) html+='<div class="cal-empty"></div>';
+  for(let d=1;d<=totalDays;d++){
+    const info=m.days[d];
+    const txt=info?`<div class="cal-text ${info.cls||''}">${info.text}</div>`:'';
+    html+=`<div class="cal-cell"><div class="cal-date">${d}</div>${txt}</div>`;
+  }
+  body.innerHTML=html;
+}
+function prevMonth(){if(curMonth>7){curMonth--;renderCal();}}
+function nextMonth(){if(curMonth<9){curMonth++;renderCal();}}
+
+function nav(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(s=>s.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  const map={home:0,calendar:1,accounts:2,raw:3,amore:4,molbany:5,meta:6,study:7};
+  if(map[id]!==undefined) document.querySelectorAll('.sb-item')[map[id]].classList.add('active');
+  window.scrollTo(0,0);
+}
+function tog(id){
+  const el=document.getElementById(id);
+  const chev=document.getElementById('chev-'+id);
+  if(el) el.classList.toggle('on');
+  if(chev) chev.classList.toggle('open');
+}
+function addImages(input,previewId){
+  const preview=document.getElementById(previewId);
+  Array.from(input.files).forEach(file=>{
+    const reader=new FileReader();
+    reader.onload=e=>{
+      const wrap=document.createElement('div');
+      wrap.className='img-thumb';
+      wrap.innerHTML=`<img src="${e.target.result}" alt="첨부 이미지"><button class="del" onclick="this.parentNode.remove()">✕</button>`;
+      preview.appendChild(wrap);
+    };
+    reader.readAsDataURL(file);
+  });
+  input.value='';
+}
+renderCal();
+</script>
+</body>
+</html>
